@@ -18,10 +18,10 @@ class LoginSerializer(TokenObtainPairSerializer):
     def validate(self, attrs):
         data = super().validate(attrs)
         request = self.context.get("request")
-        if resolve(request.path_info).url_name.split("-")[0] != self.user.role:
-            raise exceptions.AuthenticationFailed(
-                self.default_error_messages["no_active_account"]
-            )
+        # if resolve(request.path_info).url_name.split("-")[0] != self.user.role:
+        #     raise exceptions.AuthenticationFailed(
+        #         self.default_error_messages["no_active_account"]
+        #     )
 
         if settings.SIMPLE_JWT.get("UPDATE_LAST_LOGIN"):
             update_last_login(None, self.user)

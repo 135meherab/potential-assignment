@@ -6,11 +6,14 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("api/auth/", include("authentications.urls")),
     # app urls
-    path("api/articles/", include("article.urls")),
-    path("api/forum/", include("forum.urls")),
-    path("api/options/", include("options.urls")),
-    path("api/support/", include("support.urls")),
-    path("api/settings/", include("site_settings.urls")),
+    # path("api/articles/", include("article.urls")),
+    path("api/vendors/", include("vendors.urls")),
+    path("api/products/", include("products.urls")),
+    path("api/orders/", include("orders.urls")),
+    # path("api/forum/", include("forum.urls")),
+    # path("api/options/", include("options.urls")),
+    # path("api/support/", include("support.urls")),
+    # path("api/settings/", include("site_settings.urls")),
 ]
 
 if not settings.USE_S3:

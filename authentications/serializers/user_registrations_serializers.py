@@ -37,6 +37,12 @@ class RegistrationSerializer(serializers.ModelSerializer):
     full_name = serializers.CharField(
         required=True, write_only=True, source="user_information.full_name"
     )
+    address = serializers.CharField(
+        required=True, write_only=True, source="user_information.address"
+    )
+    phone_number = serializers.CharField(
+        required=True, write_only=True, source="user_information.phone_number"
+    )
     role = serializers.ChoiceField(
         choices=User.ROLE,
         required=True,
@@ -50,6 +56,8 @@ class RegistrationSerializer(serializers.ModelSerializer):
             "password",
             "retype_password",
             "full_name",
+            "address",
+            "phone_number",
             "role",
         ]
         extra_kwargs = {

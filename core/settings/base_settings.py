@@ -63,7 +63,9 @@ INSTALLED_APPS = [
     "support",
     "options",
     "site_settings",
-    "payment",
+    "vendors",
+    "products",
+    "orders"
 ]
 
 MIDDLEWARE = [

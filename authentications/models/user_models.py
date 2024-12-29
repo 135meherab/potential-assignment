@@ -29,8 +29,9 @@ class User(AbstractBaseUser, PermissionsMixin):
     )
 
     ROLE = (
-        ("user", "user"),
         ("admin", "admin"),
+        ("vendor", "vendor"),
+        ("customer", "customer"),
     )
 
     id = models.UUIDField(
