@@ -1,0 +1,15 @@
+services:
+  clypt-backend:
+    container_name: clypt-backend
+    image: 'ghcr.io/potentialinc/clypt-backend:latest'
+    restart: unless-stopped
+    volumes:
+      - './media:/app/media'
+      - './google-services.json:/app/google-services.json:ro'
+    env_file: .env
+   # ports:
+    #  - '8004:8004'
+networks:
+  default:
+    external: true
+    name: nginxproxy

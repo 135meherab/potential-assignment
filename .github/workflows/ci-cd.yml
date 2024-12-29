@@ -1,0 +1,27 @@
+name: Docker Build and Deploy Workflow
+
+on:
+  pull_request:
+    types:
+      - closed
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Execute remote SSH commands using password
+        uses: appleboy/ssh-action@master
+        with:
+          # need to set this secrets to the git repo
+          host: ${{ secrets.SERVER_HOST_PROD }}
+          username: ${{ secrets.SERVER_USER_PROD }}
+          key: ${{ secrets.SERVER_KEY_PROD }}
+          script: |
+            cd EnterMong-Backend
+            docker compose pull 
+            docker compose up -d --build --force-recreate
+            docker system prune -f
