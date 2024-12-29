@@ -65,7 +65,7 @@ INSTALLED_APPS = [
     "site_settings",
     "vendors",
     "products",
-    "orders"
+    "orders",
 ]
 
 MIDDLEWARE = [

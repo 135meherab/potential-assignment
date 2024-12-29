@@ -1,26 +1,32 @@
 from OpenSSL.rand import status
-from rest_framework.response import Response
-from rest_framework import viewsets
-from orders.models import CartItems, Cart
-from orders.serializers import CartItemSerializer, CartSerializer
-from rest_framework import status
+from rest_framework import status, viewsets
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
+
+from orders.models import Cart, CartItems
+from orders.serializers import CartItemSerializer, CartSerializer
+from products.models import ProductModel
+
+
 class CartViewSets(viewsets.ViewSet):
     permission_classes = [IsAuthenticated]
 
     def get_cart(self, request):
         cart, created = Cart.objects.get_or_create(user=request.user)
-        total_cost = sum(item.product.price * item.quantity for item in cart.cart_items.all())
+        total_cost = sum(
+            item.product.price * item.quantity for item in cart.cart_items.all()
+        )
         serializer = CartSerializer(cart)
-        return Response({
-                "cart": serializer.data,
-                "total_cost": total_cost
-        })
+        return Response({"cart": serializer.data, "total_cost": total_cost})
 
-    def add_item(self,request):
+    def add_item(self, request):
         cart, created = Cart.objects.get_or_create(user=request.user)
-        product = request.data.get('product')
-        quantity = request.data.get('quantity', 1)
+        print(request.data)
+        product_id = request.data.get("product_id")
+        quantity = request.data.get("quantity", 1)
+        print(product_id)
+        product = ProductModel.objects.get(id=product_id)
+        print(product)
 
         cart_item, created = CartItems.objects.get_or_create(cart=cart, product=product)
 
@@ -37,7 +43,7 @@ class CartViewSets(viewsets.ViewSet):
     def update_item(self, request, pk=None):
         try:
             cart_item = CartItems.objects.get(pk=pk, cart__user=request.user)
-            quantity = request.data.get('quantity')
+            quantity = request.data.get("quantity")
             if quantity is not None:
                 cart_item.quantity = quantity
                 cart_item.save()

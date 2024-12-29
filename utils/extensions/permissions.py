@@ -43,10 +43,12 @@ class IsOwnerOrReadOnly(permissions.BasePermission):
             return True
         return obj.user == request.user
 
+
 class IsVendor(permissions.BasePermission):
     def has_permission(self, request, view):
-        return request.user and request.user.role == 'vendor'
+        return request.user and request.user.role == "vendor"
+
 
 class IsCustomer(permissions.BasePermission):
     def has_permission(self, request, view):
-        return request.user and request.user.role == 'customer'
+        return request.user and request.user.role == "customer"
